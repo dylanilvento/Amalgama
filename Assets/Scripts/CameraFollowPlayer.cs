@@ -21,8 +21,8 @@ public class CameraFollowPlayer : MonoBehaviour {
 			transform.Translate(Vector2.up * Time.deltaTime * 100);
 		}
 
-		else if (target.position.y < transform.position.y - 108) {
-			transform.Translate(Vector2.down * Time.deltaTime * 300);
+		else if (target.position.y < transform.position.y - 95) {
+			transform.Translate(Vector2.down * Time.deltaTime * 450);
 		}
 
 		transform.position = new Vector3(target.transform.position.x, transform.position.y, transform.position.z);// - relPos;

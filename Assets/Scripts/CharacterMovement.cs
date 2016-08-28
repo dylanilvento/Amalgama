@@ -13,7 +13,7 @@ public class CharacterMovement : MonoBehaviour {
 	CharacterCombat charCombat;
 
 	Animator anim;
-	int moveSpeed = 125;
+	public int moveSpeed = 125;
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D>();
@@ -41,7 +41,8 @@ public class CharacterMovement : MonoBehaviour {
 		if (Input.GetKey("right")) {
 			//rb.velocity = Vector2.right * moveSpeed;
 			if (grounded) rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
-			else if (!justLeft && !facingRight) rb.velocity = new Vector2(moveSpeed / 4, rb.velocity.y);
+			// else if (!justLeft && !facingRight) rb.velocity = new Vector2(moveSpeed / 1.5f, rb.velocity.y);
+			else if (!justLeft) rb.velocity = new Vector2(moveSpeed / 1.5f, rb.velocity.y);
 			anim.SetBool("walk", true);
 			if (!facingRight) {
 				gameObject.transform.localScale = new Vector2(gameObject.transform.localScale.x * -1f, gameObject.transform.localScale.y);
@@ -53,7 +54,8 @@ public class CharacterMovement : MonoBehaviour {
 		else if (Input.GetKey("left")) {
 			//rb.velocity = Vector2.left * moveSpeed;
 			if (grounded) rb.velocity = new Vector2(-1 * moveSpeed, rb.velocity.y);
-			else if (!justLeft && facingRight) rb.velocity = new Vector2(-1 * moveSpeed / 4, rb.velocity.y);
+			// else if (!justLeft && facingRight) rb.velocity = new Vector2(-1 * moveSpeed / 1.5f, rb.velocity.y);
+			else if (!justLeft) rb.velocity = new Vector2(-1 * moveSpeed / 1.5f, rb.velocity.y);
 
 			anim.SetBool("walk", true);
 			if (facingRight) {
@@ -96,7 +98,7 @@ public class CharacterMovement : MonoBehaviour {
 		justLeft = true;
 
 		print(justLeft);
-		yield return new WaitForSeconds(0.25f);
+		yield return new WaitForSeconds(0.1f);
 
 		justLeft = false;
 	}
