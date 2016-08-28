@@ -3,6 +3,9 @@ using System.Collections;
 
 public class ImpCombat : MonoBehaviour {
 	public GameObject[] damageNums = new GameObject[10];
+	public GameObject deathExplosion;
+
+	public GameObject element;
 
 	int health = 10;
 
@@ -36,6 +39,25 @@ public class ImpCombat : MonoBehaviour {
 
 		GameObject damageCounter = (GameObject) Instantiate(damageNums[damage], transform.position,  Quaternion.identity);
 		damageCounter.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-150, 150f), Random.Range(150f, 250f));
+
+		health -= damage;
+
+		if (health <= 0) {
+			Destroy(gameObject);
+
+			int explosionNum = Random.Range(3, 6);
+
+			for (int ii = 0; ii < explosionNum; ii++) {
+				Instantiate(deathExplosion, new Vector2(transform.position.x - Random.Range(-30f, 30f), transform.position.y - Random.Range(-20f, 40f)),  Quaternion.identity);
+			}
+
+			int elementNum = Random.Range(1, 4);
+			
+			for (int ii = 0; ii < elementNum; ii++) {
+				GameObject spawnedElement = (GameObject) Instantiate(element, transform.position,  Quaternion.identity);
+				spawnedElement.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-150, 150f), Random.Range(150f, 250f));
+			}
+		}
 
 		StartCoroutine("Flash");
 	}
