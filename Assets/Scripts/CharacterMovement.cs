@@ -8,6 +8,8 @@ public class CharacterMovement : MonoBehaviour {
 	bool canAttack = true;
 	bool justLeft = false;
 
+	public BoxCollider2D swordAttack;
+
 	Animator anim;
 	int moveSpeed = 125;
 	// Use this for initialization
@@ -72,9 +74,11 @@ public class CharacterMovement : MonoBehaviour {
 
 	IEnumerator FlashAttack () {
 		canAttack = false;
+		swordAttack.enabled = true;
 
 		yield return new WaitForSeconds(0.3f);
 
+		swordAttack.enabled = false;
 		canAttack = true;
 	}
 
