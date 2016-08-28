@@ -10,12 +10,15 @@ public class CharacterMovement : MonoBehaviour {
 
 	public BoxCollider2D swordAttack;
 
+	CharacterCombat charCombat;
+
 	Animator anim;
 	int moveSpeed = 125;
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D>();
 		anim = GetComponent<Animator>();
+		charCombat = GetComponent<CharacterCombat>();
 	}	
 
 	
@@ -76,10 +79,17 @@ public class CharacterMovement : MonoBehaviour {
 		canAttack = false;
 		swordAttack.enabled = true;
 
+		charCombat.canTakeDamage = false;
+
 		yield return new WaitForSeconds(0.3f);
 
+		charCombat.canTakeDamage = true;
 		swordAttack.enabled = false;
 		canAttack = true;
+	}
+
+	public void StartJustLeftCoroutine() {
+		StartCoroutine("FlashJustLeft");
 	}
 
 	IEnumerator FlashJustLeft () {

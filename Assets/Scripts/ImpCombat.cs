@@ -6,17 +6,22 @@ public class ImpCombat : MonoBehaviour {
 	public GameObject deathExplosion;
 
 	public GameObject element;
+	public GameObject attack;
 
 	int health = 10;
 
 	ImpMovement movementScript;
 	Rigidbody2D rb;
 	SpriteRenderer sr;
+	Animator anim;
 	// Use this for initialization
 	void Start () {
 		movementScript = GetComponent<ImpMovement>();
 		rb = GetComponent<Rigidbody2D>();
 		sr = GetComponent<SpriteRenderer>();
+		anim = GetComponent<Animator>();
+
+		StartCoroutine("Attack");
 	}
 	
 	// Update is called once per frame
@@ -35,7 +40,7 @@ public class ImpCombat : MonoBehaviour {
 		movementScript.StartStopWalkingCoroutine();
 		rb.velocity = new Vector2(direction * 200f, 400f);
 
-		int damage = Random.Range(0, 9);
+		int damage = Random.Range(1, 9);
 
 		GameObject damageCounter = (GameObject) Instantiate(damageNums[damage], transform.position,  Quaternion.identity);
 		damageCounter.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-150, 150f), Random.Range(150f, 250f));
@@ -76,6 +81,25 @@ public class ImpCombat : MonoBehaviour {
 
 			t -= Time.deltaTime;
 			print(t);
+		}
+	}
+
+	IEnumerator Attack () {
+		while (true) {
+			yield return new WaitForSeconds(Random.Range(1f, 5f));
+			movementScript.StartStopWalkingCoroutine();
+
+			anim.SetBool("attack", true);
+
+			GameObject spawnedAttack = (GameObject) Instantiate(attack, transform.position, Quaternion.identity);
+			ElementalBallMovement ballMovement = spawnedAttack.GetComponent<ElementalBallMovement>();
+
+			if (transform.localScale.x < 0) ballMovement.SetDirection(false);
+
+			yield return new WaitForSeconds(1f);
+
+			anim.SetBool("attack", false);
+
 		}
 	}
 
