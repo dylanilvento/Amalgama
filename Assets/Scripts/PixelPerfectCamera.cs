@@ -10,13 +10,14 @@ public class PixelPerfectCamera : MonoBehaviour {
 
 	void Awake () {
 
-		Screen.SetResolution (1280, 720, false);
+		//Screen.SetResolution (1280, 720, false);
 		var camera = GetComponent<Camera> ();
 
 		if (camera.orthographic) {
 			scale = Screen.height/nativeResolution.y;
 			pixelsToUnits *= scale;
-			camera.orthographicSize = (Screen.height / 2.0f) / pixelsToUnits;
+			//camera.orthographicSize = (Screen.height / 2.0f) / pixelsToUnits;
+			camera.orthographicSize = 180f;
 		}
 	}
 
