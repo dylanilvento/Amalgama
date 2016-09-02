@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class StartScreenSpawnTriggers : MonoBehaviour {
 	public GameObject elementText;
@@ -13,7 +14,9 @@ public class StartScreenSpawnTriggers : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (collided && Input.GetKeyDown("space")) {
+			SceneManager.LoadScene(1);
+		}
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {
